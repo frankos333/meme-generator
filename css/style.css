@@ -10,7 +10,7 @@ html {
 
 body {
     margin: 0;
-    background-image: url(/img-cover/meme18.jpg) ;
+    background: url(/img-cover/meme18.jpg) ;
     /* background-size: cover; */
 }
 
@@ -132,13 +132,15 @@ a {
 }
 
 @media (max-width:740px) {
+    html{
+        font-size: 14px;
+    }
     .container {
         max-width: 550px;
     }
     .main-nav li a {
-        min-height: 75px;
-        min-width: 75px;
-        font-size: 0.75rem;
+        min-height: 85px;
+        min-width: 85px;
     }
     .logo {
         font-size: 1.5rem;

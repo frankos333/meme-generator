@@ -57,7 +57,7 @@
 .font-edit select {
     padding: 0.5rem;
     margin-top: 0.3rem;
-    margin-inline-end: 5px;
+    max-width: 140px;
 }
 .font-edit button{
     font-size: 1.2rem;
@@ -120,7 +120,7 @@ a.download-meme {
 }
 
 .color-container{
-    padding-inline-start: 0.4rem;
+    padding-inline-start: 0.6rem;
 }
 
 .font-styling{
@@ -140,7 +140,7 @@ a.download-meme {
 @media (max-width: 800px) {
     .meme-editor {
         flex-direction: column;
-        height: 500px;
+        height: 600px;
     }
     .canvas-container {
         height: 300px;

@@ -27,13 +27,17 @@ function resizeCanvas() {
     gElCanvas.height = elContainer.offsetHeight;
 }
 
-function drawMeme(imgId) {
+function drawMeme() {
     const meme = getMeme();
     var img = new Image()
-    img.src = `./imgs-square/${imgId}.jpg`;
+    img.src = `./imgs-square/${meme.selectedImgId}.jpg`;
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height);
-        meme.lines.forEach((line) => {
+        meme.lines.forEach((line, idx) => {
+            if (meme.selectedLineIdx === idx) {
+                gCtx.fillStyle = 'rgba(255,255,255,0.5) ';
+                gCtx.fillRect(0, line.y - line.size, gElCanvas.width, line.size );
+            }
             gCtx.strokeStyle = line.strokeColor;
             gCtx.fillStyle = line.color;
             gCtx.font = line.size + 'px ' + line.font;
@@ -115,8 +119,8 @@ function onSetAlignText(elAlignBtn) {
 }
 
 function onSwitchLine() {
-    switchLine()
-    setInputText()
+    switchLine();
+    setInputText();
     drawMeme();
 }
 
@@ -157,5 +161,12 @@ function onAddLine() {
 function onRemoveLine() {
     removeLine();
     renderMeme();
+}
+function canvasClicked(event) {
+    gMeme.lines.forEach(line => {
+        if (event.offsetX === line.x || event.offsetY === line.y) {
+            console.log(true)
+        }
+    })
 }
 
