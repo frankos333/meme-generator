@@ -1,0 +1,33 @@
+/* MEME GALLERY */
+
+.meme-gallery {
+    margin-top: 20px;
+}
+
+.meme-gallery img, .saved-memes-container img {
+    width: 200px;
+    height: 200px;
+    margin: .5rem;
+    border: 1px solid black;
+    transition: opacity .3s;
+}
+
+.meme-gallery img {
+    cursor: pointer;
+}
+
+.memes {
+    text-align: center;
+}
+
+.meme-gallery img:hover {
+    opacity: 0.7;
+}
+
+@media (max-width: 800px) {
+    .meme-gallery img {
+        width: 200px;
+        height: 200px;
+        margin: .25rem;
+    }
+}

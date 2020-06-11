@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <script src="https://kit.fontawesome.com/f4b51a9e99.js" crossorigin="anonymous"></script>
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Days+One&family=Frijole&display=swap"
+        rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/meme-editor.css">
+    <link rel="stylesheet" href="css/meme-gallery.css">
+</head>
+
+<body onload="onInit()">
+
+    <!-- NAV BAR SECTION -->
+    <nav class="nav">
+        <div class="nav-container container flex justify-between align-center">
+            <div class="logo">
+                <a href="#">M<span>e</span>M<span>e</span>G<span>e</span><span>n.</span></a>
+            </div>
+
+            <ul class="main-nav flex clean-list">
+                <li>
+                    <a href="#" onclick="openGallery()">Gallery</a>
+                </li>
+                <li>
+                    <a href="#" onclick="openSavedMemes()">Memes</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <!-- SAVED MEMES SECTION -->
+    <section class="memes container">
+        <h1>My saved Memes</h1>
+        <div class="saved-memes-container flex wrap">
+
+        </div>
+    </section>
+
+
+
+
+    <!-- MEME EDITOR SECTION -->
+    <section class="meme-editor container flex">
+        <div class="canvas-container">
+            <canvas id="canvas"> </canvas>
+        </div>
+        <div class="edit-tools">
+            <div class="text-edit">
+                <input type="text" name="lineText" placeholder="Insert Text Here" oninput="onSetLineText(this.value)">
+                <div class="text-options">
+                    <button class="switch-lines-btn" title="Switch Lines" onclick="onSwitchLine()"> &#x21C5;</button>
+                    <button onclick="onChangeLineHeight(-10)" title="Rotate Text Up">⬆️</button>
+                    <button onclick="onChangeLineHeight(+10)" title="Rotate Text Down">⬇️</button>
+                    <button onclick="onAddLine()" title="Add Line">➕</button>
+                    <button onclick="onRemoveLine()" title="Remove Line">🗑️</button>
+                </div>
+            </div>
+            <div class="font-edit">
+                <div class="font-options">
+                    <button onclick="onChangeFontSize(5)" title="Increase font size">A+</button>
+                    <button onclick="onChangeFontSize(-5)" title="Decrease font size">A-</button>
+                    <button id="right" onclick="onSetAlignText(this)" title="Align Left">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <button id="center" class="mode" onclick="onSetAlignText(this)" title="Align Center">
+                        <i class="fas fa-align-center"></i>
+                    </button>
+                    <button id="left" onclick="onSetAlignText(this)" title="Align Right">
+                        <i class="fas fa-align-right"></i>
+                    </button>
+                </div>
+                <div class="font-styling">
+                    <select name="fontFamily" onchange="onSetFontFamily(this.value)" style="font-family: Impact;">
+                        <option value="impact" style="font-family: Impact;">Impact</option>
+                        <option value="arial" style="font-family: arial;">Arial</option>
+                        <option value="Trebuchet MS" style="font-family: Trebuchet MS;">Trebuchet MS</option>
+                        <option value="Times New Roman" style="font-family: Times New Roman;">Times New Roman</option>
+                        <option value="Verdana" style="font-family: Verdana;">Verdana</option>
+                        <option value="cursive" style="font-family: cursive;">Cursive</option>
+                    </select>
+                    <div class="color-container">
+                    <label for="fontColor">🎨</label>
+                    <input type="color" style="opacity: 0;" id="fontColor" title="Text Color"
+                        oninput="onSetFontColor(this.value)">
+                    <label for="fontStroke">✏️</label>
+                    <input type="color" style="opacity: 0;" id="fontStroke" title="Stroke Color"
+                        oninput="onSetStrokeColor(this.value)">
+                    </div>
+                </div>
+
+            </div>
+            <div class="download-save">
+                <a class="download-meme" title="Save Meme" href="#" onclick="onSaveMeme(this)">Save</a>
+                <a class="download-meme" title="Download Meme!" href="#" onclick="onDownloadMeme(this)"
+                    download="">Download</a>
+                <a class="download-meme" title="Download Meme!" href="#" onclick="onDownloadMeme(this)"
+                    download="">Share</a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- MEME GALLERY SECTION -->
+    <section class="meme-gallery container flex wrap"></section>
+
+
+
+    <script src="js/util-service.js"></script>
+    <script src="js/meme-service.js"></script>
+    <script src="js/gallery-controller.js"></script>
+    <script src="js/meme-controller.js"></script>
+</body>
+
+</html>

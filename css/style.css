@@ -1,0 +1,146 @@
+* {
+    box-sizing: border-box;
+}
+
+/* BASE */
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    background-image: url(/img-cover/meme18.jpg) ;
+    /* background-size: cover; */
+}
+
+button {
+    cursor: pointer;
+    outline: none;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+input[type="color"] {
+cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* NAV */
+
+.nav {
+    background-color: rgba(145, 165, 162, 0.5);
+    border-bottom: 1px solid #000;
+    box-shadow: -9px 3px 10px 0px #222831;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.logo {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 2.5rem;
+    transition: 0.6s;
+}
+
+.logo:hover {
+    transform: scale(1.4);
+    transform: rotate(360deg);
+}
+
+.logo span:not(:last-child) {
+    color: rgb(2, 90, 105);
+}
+
+.logo span:last-child {
+    color: white;
+}
+
+.main-nav {
+    margin: 0;
+}
+
+.main-nav li {
+    border: 1px solid #06060699;
+    border-width: 0px 1px 0px 1px;
+}
+
+.main-nav li a {
+    background-color: rgba(105, 105, 105, 0.3);
+    color: white;
+    font-size: 1rem;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    min-width: 120px;
+    transition: background-color .7s, color .7s;
+}
+
+.main-nav li a:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+/* HELPERS */
+
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex.wrap {
+    flex-wrap: wrap;
+}
+
+.flex.justify-between {
+    justify-content: space-between;
+}
+
+.flex.justify-around {
+    justify-content: space-around;
+}
+
+.flex.justify-center {
+    justify-content: center;
+}
+
+.flex.align-center {
+    align-items: center;
+}
+
+.clean-list {
+    list-style: none;
+}
+
+.hide {
+    display: none;
+}
+
+/* RESPOSIVENESS */
+
+@media (max-width: 1050px) {
+    .container {
+        max-width: 800px;
+    }
+}
+
+@media (max-width:740px) {
+    .container {
+        max-width: 550px;
+    }
+    .main-nav li a {
+        min-height: 75px;
+        min-width: 75px;
+        font-size: 0.75rem;
+    }
+    .logo {
+        font-size: 1.5rem;
+    }
+}
