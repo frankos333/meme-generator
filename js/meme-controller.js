@@ -3,6 +3,8 @@
 var gElCanvas;
 var gCtx;
 
+var gIsDraggable = false;
+
 function onInit() {
     gSavedMemes = loadFromStorage(SAVED_MEMES);
     if (!gSavedMemes) gSavedMemes = [];
@@ -10,16 +12,17 @@ function onInit() {
     renderGallery();
     gElCanvas = document.querySelector('#canvas');
     gCtx = gElCanvas.getContext('2d');
+    setTouchListeners();//supporting Mobline
     resizeCanvas(); // sets canvas size >>>> according to the container
     resetMeme(); // sets the lines back to default settings
-    renderMeme(); // draws the selected meme
+    drawMeme(); // draws the selected meme
     document.querySelector('.meme-editor').classList.add('hide');
     document.querySelector('.memes').classList.add('hide');
+    gElCanvas.onmousedown = canvasClicked;
+    gElCanvas.onmouseup = mouseUp;
+    gElCanvas.onmousemove = moveLine;
 }
 
-function renderMeme() {
-    drawMeme(getMeme().selectedImgId);
-}
 
 function resizeCanvas() {
     var elContainer = document.querySelector('.canvas-container');
@@ -34,18 +37,52 @@ function drawMeme() {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height);
         meme.lines.forEach((line, idx) => {
+
             if (meme.selectedLineIdx === idx) {
                 gCtx.fillStyle = 'rgba(255,255,255,0.5) ';
-                gCtx.fillRect(0, line.y - line.size, gElCanvas.width, line.size );
+                gCtx.fillRect(0, line.y - line.size, gElCanvas.width, line.size);
             }
             gCtx.strokeStyle = line.strokeColor;
             gCtx.fillStyle = line.color;
-            gCtx.font = line.size + 'px ' + line.font;
+            gCtx.font = line.size + 'pt ' + line.font;
             gCtx.textAlign = line.align;
             gCtx.fillText(line.txt.toUpperCase(), line.x, line.y);
             gCtx.strokeText(line.txt.toUpperCase(), line.x, line.y);
         })
     }
+}
+
+function onEdit(ev) {
+    if (document.querySelector('.meme-editor').classList.contains('hide')) return;
+    const line = getMeme().lines[getMeme().selectedLineIdx]
+    if (ev.key === 'Backspace') {
+        line.txt = line.txt.slice(0, -1)
+        drawMeme();
+        return;
+    }
+    else if (ev.key.length > 1) return;
+    line.txt += ev.key;
+    drawMeme();
+}
+function setTouchListeners() {
+    gElCanvas.addEventListener('touchstart', (ev) => {
+        ev.preventDefault()
+        canvasClicked(event)
+    })
+    gElCanvas.addEventListener('touchend', (ev) => {
+        ev.preventDefault()
+        gIsDraggable = false;
+    })
+    gElCanvas.addEventListener('touchmove', (ev) => {
+        moveLine(ev)
+    })
+}
+function getTouchPos(canvas, mouseEvent) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: mouseEvent.touches[0].clientX - rect.left,
+        y: mouseEvent.touches[0].clientY - rect.top
+    };
 }
 
 
@@ -58,18 +95,18 @@ function downloadCanvas(elLink) {
 
 function onSetLineText(lineText) {
     setLineText(lineText);
-    renderMeme();
+    drawMeme();
 }
 
 function onSetFontFamily(fontFamily) {
     setFontFamily(fontFamily);
-    renderMeme();
+    drawMeme();
     document.querySelector('[name="fontFamily"]').style.fontFamily = document.querySelector('[name="fontFamily"]').value;
 }
 
 function onSetMeme(imgId) {
     setMeme(imgId);
-    renderMeme()
+    drawMeme()
     setInputText();
     document.querySelector('.meme-editor').classList.remove('hide');
     document.querySelector('.meme-gallery').classList.add('hide');
@@ -91,7 +128,7 @@ function openSavedMemes() {
 
 function onChangeFontSize(diff) {
     changeFontSize(diff);
-    renderMeme()
+    drawMeme()
 }
 
 function onChangeLineHeight(diff) {
@@ -102,19 +139,19 @@ function onChangeLineHeight(diff) {
 
 function onSetFontColor(color) {
     setFontColor(color);
-    renderMeme();
+    drawMeme();
     document.querySelector('[for="fontColor"]').style.color = color;
 }
 function onSetStrokeColor(color) {
     setStrokeColor(color);
-    renderMeme();
-    document.querySelector('[for="strokeColor"]').style.color = color;
+    drawMeme();
+    document.querySelector('[for="fontStroke"]').style.color = color;
 }
 
 
 function onSetAlignText(elAlignBtn) {
     setAlignText(elAlignBtn.id);
-    renderMeme()
+    drawMeme()
     setBtnMode(elAlignBtn)
 }
 
@@ -130,7 +167,7 @@ function setInputText() {
     elLineInput.focus()
 }
 function setBtnMode(elAlignBtn) {
-    document.querySelectorAll('.align-text button').forEach(btn => btn.classList.remove('mode'));
+    document.querySelectorAll('.font-edit button').forEach(btn => btn.classList.remove('mode'));
     elAlignBtn.classList.add('mode');
 }
 
@@ -156,17 +193,50 @@ function renderSavedMemes() {
 }
 function onAddLine() {
     addLine()
-    renderMeme()
+    drawMeme()
 }
 function onRemoveLine() {
     removeLine();
-    renderMeme();
+    drawMeme();
 }
-function canvasClicked(event) {
-    gMeme.lines.forEach(line => {
-        if (event.offsetX === line.x || event.offsetY === line.y) {
-            console.log(true)
+
+
+function canvasClicked(ev) {
+    if (ev.type === 'click' || ev.type === 'keydown') {
+        switchLine();
+        setInputText();
+        drawMeme();
+    }
+    const meme = getMeme();
+    if (ev.type === 'touchstart') ev.offsetY = getTouchPos(gElCanvas, ev).y
+    meme.lines.forEach((line, idx) => {
+        if (meme.selectedLineIdx === idx) gIsDraggable = true;
+        else if (ev.offsetY <= line.y && ev.offsetY >= line.y - line.size) {
+            meme.selectedLineIdx = idx;
+            drawMeme();
+            gIsDraggable = true;
         }
     })
 }
 
+
+function mouseUp() {
+    gElCanvas.style.cursor = 'default';
+    gIsDraggable = false;
+}
+function moveLine(ev) {
+    ev.preventDefault();
+    if (!gIsDraggable) return;
+    gElCanvas.style.cursor = 'all-scroll';
+    ev.preventDefault();
+    const line = getMeme().lines[getMeme().selectedLineIdx];
+    if (ev.type === 'touchmove') {
+        var touchPos = getTouchPos(gElCanvas, ev);
+        line.x = touchPos.x;
+        line.y = touchPos.y;
+    } else {
+        line.x = ev.offsetX;
+        line.y = ev.offsetY;
+    }
+    drawMeme()
+}

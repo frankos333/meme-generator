@@ -6,14 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Generator</title>
     <script src="https://kit.fontawesome.com/f4b51a9e99.js" crossorigin="anonymous"></script>
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Days+One&family=Frijole&display=swap"
-        rel="stylesheet"> -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/meme-editor.css">
     <link rel="stylesheet" href="css/meme-gallery.css">
 </head>
 
-<body onload="onInit()">
+<body onload="onInit()" onkeydown="onEdit(event)">
 
     <!-- NAV BAR SECTION -->
     <nav class="nav">
@@ -52,7 +50,7 @@
     <!-- MEME EDITOR SECTION -->
     <section class="meme-editor container flex">
         <div class="canvas-container">
-            <canvas id="canvas" onclick="canvasClicked(event)"> </canvas>
+            <canvas id="canvas"> </canvas>
         </div>
         <div class="edit-tools">
             <div class="text-edit">

@@ -5,6 +5,7 @@ var gImgs = [];
 var gSavedMemes;
 var gElCanvas = document.getElementById('canvas');
 
+
 var gMeme = {
     selectedImgId: 1
 }
