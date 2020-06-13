@@ -2,8 +2,16 @@
 
 var gElCanvas;
 var gCtx;
-
 var gIsDraggable = false;
+var gBgcs = [
+    { name: 'default', url: 'img-cover/default.jpg'},
+    { name: 'cats', url: 'img-cover/meme2.jpg'},
+    { name: 'dogs', url: 'img-cover/default.jpg'},
+    { name: 'vip', url: 'img-cover/meme3.jpg'},
+    { name: 'anime', url: 'img-cover/meme6.jpg' },
+    { name: 'babies', url: 'img-cover/meme10.jpeg'},
+];
+
 
 function onInit() {
     gSavedMemes = loadFromStorage(SAVED_MEMES);
@@ -21,6 +29,20 @@ function onInit() {
     gElCanvas.onmousedown = canvasClicked;
     gElCanvas.onmouseup = mouseUp;
     gElCanvas.onmousemove = moveLine;
+}
+
+function openBgcs() {
+    document.querySelector('.backgrounds').classList.toggle('hide');
+}
+
+function closeBgcsBar(){
+    document.querySelector('.backgrounds').classList.add('hide');
+}
+function onSetBgc(elBgcBtn) {
+    var bgcName = elBgcBtn.id;
+    var bgc = gBgcs.find(bgc => bgc.name === bgcName);
+    document.body.style.backgroundImage = `url('${bgc.url}')`;
+   
 }
 
 
@@ -50,6 +72,10 @@ function drawMeme() {
             gCtx.strokeText(line.txt.toUpperCase(), line.x, line.y);
         })
     }
+}
+function onSetFilterBy(keyword) {
+    setFilterBy(keyword);
+    renderGallery();
 }
 
 function onEdit(ev) {

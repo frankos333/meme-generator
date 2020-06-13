@@ -56,9 +56,12 @@ function _createImgs() {
     gImgs.push(_createImg(18, `imgs-square/18.jpg`, ['movie', 'pointer', 'popular']));
 }
 
+
+
 function _createImg(id, url, keywords) {
     return { id, url, keywords }
 }
+
 
 function getMeme() {
     return gMeme;
@@ -71,6 +74,7 @@ function getImgs() {
 function getSavedMemes() {
     return gSavedMemes;
 }
+
 
 function setLineText(lineText) {
     gMeme.lines[gMeme.selectedLineIdx].txt = lineText;

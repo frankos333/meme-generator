@@ -13,6 +13,8 @@
 
 <body onload="onInit()" onkeydown="onEdit(event)">
 
+    <div class="page-container">
+        <main class="main-content">
     <!-- NAV BAR SECTION -->
     <nav class="nav">
         <div class="nav-container container flex justify-between align-center">
@@ -22,19 +24,31 @@
 
             <ul class="main-nav flex clean-list">
                 <li>
-                    <a href="#" onclick="openGallery()">Gallery</a>
+                    <a href="#" onclick="openGallery(this)">Gallery</a>
                 </li>
                 <li>
-                    <a href="#" onclick="openSavedMemes()">Memes</a>
+                    <a href="#" onclick="openSavedMemes(this)">Memes</a>
+                </li>
+                <li>
+                    <a href="#" class="open-bgcs" onclick="openBgcs(this)">Background</a>
                 </li>
                 <li>
                     <a href="#">About</a>
                 </li>
+
             </ul>
         </div>
     </nav>
 
-
+    <div class="backgrounds hide">
+        <button id="default" class="selected-bgc" onclick="onSetBgc(this)">Default</button>
+        <button id="cats" onclick="onSetBgc(this)">Cats</button>
+        <button id="dogs" onclick="onSetBgc(this)">Dogs</button>
+        <button id="vip" onclick="onSetBgc(this)">VIP</button>
+        <button id="anime" onclick="onSetBgc(this)">Anime</button>
+        <button id="babies" onclick="onSetBgc(this)">Babies</button>
+        <button title="Close Bar" onclick="closeBgcsBar()">X</button>
+    </div>
 
     <!-- SAVED MEMES SECTION -->
     <section class="memes container">
@@ -87,12 +101,12 @@
                         <option value="cursive" style="font-family: cursive;">Cursive</option>
                     </select>
                     <div class="color-container">
-                    <label for="fontColor">🎨</label>
-                    <input type="color" style="opacity: 0;" id="fontColor" title="Text Color"
-                        oninput="onSetFontColor(this.value)">
-                    <label for="fontStroke">✏️</label>
-                    <input type="color" style="opacity: 0;" id="fontStroke" title="Stroke Color"
-                        oninput="onSetStrokeColor(this.value)">
+                        <label for="fontColor">🎨</label>
+                        <input type="color" style="opacity: 0;" id="fontColor" title="Text Color"
+                            oninput="onSetFontColor(this.value)">
+                        <label for="fontStroke">✏️</label>
+                        <input type="color" style="opacity: 0;" id="fontStroke" title="Stroke Color"
+                            oninput="onSetStrokeColor(this.value)">
                     </div>
                 </div>
 
@@ -113,8 +127,23 @@
 
 
     <!-- MEME GALLERY SECTION -->
-    <section class="meme-gallery container flex wrap"></section>
+    <section class="meme-gallery container flex wrap">
+        <div class="gallery"></div>
+    </section>
+</main>
 
+    <footer id="about" class="main-footer">
+        <div class="footer-container container flex align-center">
+            <h2>Nadav_Frank</h2>
+            <div class="socials flex">
+                <a class="fb" title="My Facebook Page" href="https://www.facebook.com/nadav.frank"
+                    target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a class="gh" title="My Github" href="https://github.com/frankos333"><i class="fab fa-github"
+                        target="_blank"></i></a>
+            </div>
+            <h3>14 June 2020</h3>
+        </div>
+    </footer>
 
 
     <script src="js/util-service.js"></script>
