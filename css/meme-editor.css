@@ -49,7 +49,6 @@
     margin: 10px 0.5rem;
 }
 
-
 .switch-lines-btn {
     font-weight: 700;
 }
@@ -59,7 +58,8 @@
     margin-top: 0.3rem;
     max-width: 140px;
 }
-.font-edit button{
+
+.font-edit button {
     font-size: 1.2rem;
     height: 2rem;
     width: 2rem;
@@ -72,14 +72,10 @@
     transition: background-color .6s;
 }
 
-
-
 .font-edit {
     display: flex;
     flex-direction: column;
 }
-
-
 
 a.download-meme {
     background-color: rgba(9, 146, 255, 0.7);
@@ -115,17 +111,18 @@ a.download-meme {
     cursor: pointer;
     margin: 6px 0.5rem;
 }
-.font-edit label:last-child{
+
+.font-edit label:last-child {
     margin-left: 12px;
 }
 
-.color-container{
+.color-container {
     padding-inline-start: 0.6rem;
 }
 
-.font-styling{
+.font-styling {
     display: flex;
-    justify-content: center ;
+    justify-content: center;
 }
 
 .font-styling button {
@@ -137,7 +134,20 @@ a.download-meme {
 
 /* MOBILE */
 
-@media (max-width: 800px) {
+@media (max-width: 860px) {
+    .meme-editor {
+        flex-direction: column;
+        height: 900px;
+        margin-bottom: 1rem;
+    }
+    .canvas-container {
+        height: 400px;
+        width: 400px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 640px) {
     .meme-editor {
         flex-direction: column;
         height: 600px;

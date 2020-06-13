@@ -83,7 +83,6 @@ a {
     transition: background-color .7s, color .7s;
 }
 
-
 .main-nav li a:hover {
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -141,9 +140,7 @@ a {
     cursor: default;
     text-transform: uppercase;
     font-weight: 600;
-    
 }
-
 
 .footer-container a {
     display: flex;
@@ -223,21 +220,34 @@ a {
     }
 }
 
-@media (max-width:740px) {
+@media (max-width:860px) {
     html {
         font-size: 14px;
     }
     .container {
-        max-width: 550px;
+        max-width: 600px;
     }
     .footer-container h2, h3 {
         font-size: 1rem;
     }
     .main-nav li a {
-        min-height: 85px;
-        min-width: 85px;
+        min-height: 75px;
+        min-width: 75px;
+        font-size: 0.75rem;
     }
     .logo {
         font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 620px) {
+    .container {
+        max-width: 480px;
+    }
+    .logo {
+        padding-inline-end: 1.1rem;
+    }
+    .footer-container h2, h3 {
+        font-size: 1rem;
     }
 }

@@ -1,7 +1,7 @@
 /* MEME GALLERY */
 
 .meme-gallery {
-    margin-top: 20px;
+    padding-inline-start: 2rem;
 }
 
 .meme-gallery img, .saved-memes-container img {
@@ -24,10 +24,21 @@
     opacity: 0.7;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 640px) {
     .meme-gallery img {
         width: 200px;
         height: 200px;
         margin: .25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .meme-gallery {
+        padding: 0;
+        padding-inline-start: 4rem;
+    }
+    .meme-gallery img, .memes img {
+        width: 140px;
+        height: 140px;
     }
 }
