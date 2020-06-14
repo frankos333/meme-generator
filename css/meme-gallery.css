@@ -4,11 +4,14 @@
     padding-inline-start: 2rem;
 }
 
+.gallery {
+    padding-inline-start: 2rem;
+}
+
 .meme-gallery img, .saved-memes-container img {
     width: 200px;
     height: 200px;
     margin: .5rem;
-    border: 1px solid black;
     transition: opacity .3s;
 }
 
@@ -21,8 +24,49 @@
 }
 
 .meme-gallery img:hover {
-    opacity: 0.7;
+    outline: 4px white inset;
 }
+
+.share_search-container {
+    width: 100%;
+    border-radius: 100px;
+    margin-top: 0.7rem;
+    background-color: rgba(252, 255, 248, 0.7);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.search-bar input {
+    width: 100%;
+    border-radius: 5em;
+    color: #000000;
+    font-weight: 600;
+    padding: 12px 60px 12px 50px;
+    outline: 0;
+    opacity: 0.9;
+    font-family: cursive;
+}
+
+.search-bar {
+    width: 90%;
+}
+
+.search-bar input::placeholder {
+    color: black;
+    font-weight: 600;
+    font-family: cursive;
+}
+
+.file-input-btn {
+    display: none;
+}
+
+.upload {
+    font-family: cursive;
+    text-shadow: -1px 1px 5px black;
+    font-size: 1rem;
+}
+
+/* RESPOSIVENESS */
 
 @media (max-width: 640px) {
     .meme-gallery img {
@@ -40,5 +84,8 @@
     .meme-gallery img, .memes img {
         width: 140px;
         height: 140px;
+    }
+    .search-bar input::placeholder {
+        font-size: 0.9rem;
     }
 }

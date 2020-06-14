@@ -48,6 +48,9 @@
     border-radius: 5px;
     margin: 10px 0.5rem;
 }
+input[type="color"] {
+    cursor: pointer;
+}
 
 .switch-lines-btn {
     font-weight: 700;
@@ -132,7 +135,7 @@ a.download-meme {
     margin: 5px 0.2rem;
 }
 
-/* MOBILE */
+/* RESPOSIVENESS */
 
 @media (max-width: 860px) {
     .meme-editor {

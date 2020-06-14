@@ -3,20 +3,12 @@
 var gElCanvas;
 var gCtx;
 var gIsDraggable = false;
-var gBgcs = [
-    { name: 'default', url: 'img-cover/default.jpg'},
-    { name: 'cats', url: 'img-cover/meme2.jpg'},
-    { name: 'dogs', url: 'img-cover/default.jpg'},
-    { name: 'vip', url: 'img-cover/meme3.jpg'},
-    { name: 'anime', url: 'img-cover/meme6.jpg' },
-    { name: 'babies', url: 'img-cover/meme10.jpeg'},
-];
+
 
 
 function onInit() {
-    gSavedMemes = loadFromStorage(SAVED_MEMES);
-    if (!gSavedMemes) gSavedMemes = [];
-    _createImgs();
+    getSavedMemes();
+    createImgs();
     renderGallery();
     gElCanvas = document.querySelector('#canvas');
     gCtx = gElCanvas.getContext('2d');
@@ -26,23 +18,23 @@ function onInit() {
     drawMeme(); // draws the selected meme
     document.querySelector('.meme-editor').classList.add('hide');
     document.querySelector('.memes').classList.add('hide');
-    gElCanvas.onmousedown = canvasClicked;
-    gElCanvas.onmouseup = mouseUp;
-    gElCanvas.onmousemove = moveLine;
+    gElCanvas.onmousedown = canvasClicked; // function
+    gElCanvas.onmouseup = mouseUp; // function
+    gElCanvas.onmousemove = onMoveLine; // function 
 }
 
 function openBgcs() {
     document.querySelector('.backgrounds').classList.toggle('hide');
 }
 
-function closeBgcsBar(){
+function closeBgcsBar() {
     document.querySelector('.backgrounds').classList.add('hide');
 }
 function onSetBgc(elBgcBtn) {
     var bgcName = elBgcBtn.id;
     var bgc = gBgcs.find(bgc => bgc.name === bgcName);
     document.body.style.backgroundImage = `url('${bgc.url}')`;
-   
+
 }
 
 
@@ -73,14 +65,10 @@ function drawMeme() {
         })
     }
 }
-function onSetFilterBy(keyword) {
-    setFilterBy(keyword);
-    renderGallery();
-}
 
 function onEdit(ev) {
     if (document.querySelector('.meme-editor').classList.contains('hide')) return;
-    const line = getMeme().lines[getMeme().selectedLineIdx]
+    const line = getCurrLine();
     if (ev.key === 'Backspace') {
         line.txt = line.txt.slice(0, -1)
         drawMeme();
@@ -100,7 +88,7 @@ function setTouchListeners() {
         gIsDraggable = false;
     })
     gElCanvas.addEventListener('touchmove', (ev) => {
-        moveLine(ev)
+        onMoveLine(ev)
     })
 }
 function getTouchPos(canvas, mouseEvent) {
@@ -189,7 +177,7 @@ function onSwitchLine() {
 
 function setInputText() {
     let elLineInput = document.querySelector('[name="lineText"]');
-    elLineInput.value = getMeme().lines[getMeme().selectedLineIdx].txt;
+    elLineInput.value = getCurrLine().txt;
     elLineInput.focus()
 }
 function setBtnMode(elAlignBtn) {
@@ -250,19 +238,17 @@ function mouseUp() {
     gElCanvas.style.cursor = 'default';
     gIsDraggable = false;
 }
-function moveLine(ev) {
+function onMoveLine(ev) {
     ev.preventDefault();
     if (!gIsDraggable) return;
     gElCanvas.style.cursor = 'all-scroll';
     ev.preventDefault();
-    const line = getMeme().lines[getMeme().selectedLineIdx];
     if (ev.type === 'touchmove') {
         var touchPos = getTouchPos(gElCanvas, ev);
-        line.x = touchPos.x;
-        line.y = touchPos.y;
+        moveLine(touchPos.x, touchPos.y)
+
     } else {
-        line.x = ev.offsetX;
-        line.y = ev.offsetY;
+        moveLine(ev.offsetX, ev.offsetY)
     }
     drawMeme()
 }
